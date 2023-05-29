@@ -23,7 +23,7 @@ def image(name):
     return data
 
 def main(config):
-    timezone = config.get("timezone") or "America/Mexico_City"
+    timezone = config.get("$tz") or "America/Mexico_City"
     now = time.now().in_location(timezone)
 
     return render.Root(
@@ -44,6 +44,8 @@ def main(config):
                                     expanded=True,
                                     main_align="space_between",
                                     children=[
+                                        # TODO: 24 vs 12 hour
+                                        # TODO: PM indicator
                                         render.Image(src=image("date_%s" % int(now.hour / 10)), height=15),
                                         render.Image(src=image("date_%s" % int(now.hour % 10)), height=15),
                                     ]
@@ -72,6 +74,7 @@ def main(config):
                         # Date
                         render.Row(
                             children=[
+                                # TODO: Order of month and day
                                 # Month
                                 render.Padding(
                                     pad=(0, 0, 1, 0),
