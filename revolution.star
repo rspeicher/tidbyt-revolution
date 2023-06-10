@@ -4,14 +4,12 @@ load("cache.star", "cache")
 load("humanize.star", "humanize")
 load("time.star", "time")
 
-IMAGE_URL_PATTERN = "https://raw.githubusercontent.com/DouweM/PebbleRevolution/master/resources/images/%s.png"
-
-def image(name):
+def image(asset_url, name):
     cached = cache.get(name)
     if cached:
         return cached
 
-    image_url = IMAGE_URL_PATTERN % name
+    image_url = asset_url + "images/" + name + ".png"
     response = http.get(image_url)
 
     if response.status_code != 200:
@@ -24,6 +22,8 @@ def image(name):
 
 def main(config):
     timezone = config.get("$tz") or "America/Mexico_City"
+    asset_url = config.get("$asset_url")
+
     now = time.now().in_location(timezone)
 
     return render.Root(
@@ -46,8 +46,8 @@ def main(config):
                                     children=[
                                         # TODO: 24 vs 12 hour
                                         # TODO: PM indicator
-                                        render.Image(src=image("date_%s" % int(now.hour / 10)), height=15),
-                                        render.Image(src=image("date_%s" % int(now.hour % 10)), height=15),
+                                        render.Image(src=image(asset_url, "date_%s" % int(now.hour / 10)), height=15),
+                                        render.Image(src=image(asset_url, "date_%s" % int(now.hour % 10)), height=15),
                                     ]
                                 ),
                                 # Minute
@@ -55,8 +55,8 @@ def main(config):
                                     expanded=True,
                                     main_align="space_between",
                                     children=[
-                                        render.Image(src=image("date_%s" % int(now.minute / 10)), height=15),
-                                        render.Image(src=image("date_%s" % int(now.minute % 10)), height=15),
+                                        render.Image(src=image(asset_url, "date_%s" % int(now.minute / 10)), height=15),
+                                        render.Image(src=image(asset_url, "date_%s" % int(now.minute % 10)), height=15),
                                     ]
                                 ),
                             ]
@@ -69,7 +69,7 @@ def main(config):
                         # Weekday
                         render.Padding(
                             pad=(0, 5, 0, 2),
-                            child=render.Image(src=image("day_%s" % humanize.day_of_week(now))),
+                            child=render.Image(src=image(asset_url, "day_%s" % humanize.day_of_week(now))),
                         ),
                         # Date
                         render.Row(
@@ -78,18 +78,18 @@ def main(config):
                                 # Month
                                 render.Padding(
                                     pad=(0, 0, 1, 0),
-                                    child=render.Image(src=image("second_%s" % int(now.month / 10)), height=5),
+                                    child=render.Image(src=image(asset_url, "second_%s" % int(now.month / 10)), height=5),
                                 ),
                                 render.Padding(
                                     pad=(0, 0, 2, 0),
-                                    child=render.Image(src=image("second_%s" % int(now.month % 10)), height=5),
+                                    child=render.Image(src=image(asset_url, "second_%s" % int(now.month % 10)), height=5),
                                 ),
                                 # Day
                                 render.Padding(
                                     pad=(0, 0, 1, 0),
-                                    child=render.Image(src=image("second_%s" % int(now.day / 10)), height=5),
+                                    child=render.Image(src=image(asset_url, "second_%s" % int(now.day / 10)), height=5),
                                 ),
-                                render.Image(src=image("second_%s" % int(now.day % 10)), height=5),
+                                render.Image(src=image(asset_url, "second_%s" % int(now.day % 10)), height=5),
                             ]
                         )
                     ]
