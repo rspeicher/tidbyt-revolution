@@ -21,10 +21,10 @@ def image(asset_url, name):
     return data
 
 def main(config):
-    timezone = config.get("$tz") or "America/Mexico_City"
-    asset_url = config.get("$asset_url")
+    TZ = config.get("$tz") or "America/Mexico_City"
+    ASSET_URL = config.get("$asset_url")
 
-    now = time.now().in_location(timezone)
+    now = time.now().in_location(TZ)
 
     return render.Root(
         child=render.Row(
@@ -46,8 +46,8 @@ def main(config):
                                     children=[
                                         # TODO: 24 vs 12 hour
                                         # TODO: PM indicator
-                                        render.Image(src=image(asset_url, "date_%s" % int(now.hour / 10)), height=15),
-                                        render.Image(src=image(asset_url, "date_%s" % int(now.hour % 10)), height=15),
+                                        render.Image(src=image(ASSET_URL, "date_%s" % int(now.hour / 10)), height=15),
+                                        render.Image(src=image(ASSET_URL, "date_%s" % int(now.hour % 10)), height=15),
                                     ]
                                 ),
                                 # Minute
@@ -55,8 +55,8 @@ def main(config):
                                     expanded=True,
                                     main_align="space_between",
                                     children=[
-                                        render.Image(src=image(asset_url, "date_%s" % int(now.minute / 10)), height=15),
-                                        render.Image(src=image(asset_url, "date_%s" % int(now.minute % 10)), height=15),
+                                        render.Image(src=image(ASSET_URL, "date_%s" % int(now.minute / 10)), height=15),
+                                        render.Image(src=image(ASSET_URL, "date_%s" % int(now.minute % 10)), height=15),
                                     ]
                                 ),
                             ]
@@ -69,7 +69,7 @@ def main(config):
                         # Weekday
                         render.Padding(
                             pad=(0, 5, 0, 2),
-                            child=render.Image(src=image(asset_url, "day_%s" % humanize.day_of_week(now))),
+                            child=render.Image(src=image(ASSET_URL, "day_%s" % humanize.day_of_week(now))),
                         ),
                         # Date
                         render.Row(
@@ -78,18 +78,18 @@ def main(config):
                                 # Month
                                 render.Padding(
                                     pad=(0, 0, 1, 0),
-                                    child=render.Image(src=image(asset_url, "second_%s" % int(now.month / 10)), height=5),
+                                    child=render.Image(src=image(ASSET_URL, "second_%s" % int(now.month / 10)), height=5),
                                 ),
                                 render.Padding(
                                     pad=(0, 0, 2, 0),
-                                    child=render.Image(src=image(asset_url, "second_%s" % int(now.month % 10)), height=5),
+                                    child=render.Image(src=image(ASSET_URL, "second_%s" % int(now.month % 10)), height=5),
                                 ),
                                 # Day
                                 render.Padding(
                                     pad=(0, 0, 1, 0),
-                                    child=render.Image(src=image(asset_url, "second_%s" % int(now.day / 10)), height=5),
+                                    child=render.Image(src=image(ASSET_URL, "second_%s" % int(now.day / 10)), height=5),
                                 ),
-                                render.Image(src=image(asset_url, "second_%s" % int(now.day % 10)), height=5),
+                                render.Image(src=image(ASSET_URL, "second_%s" % int(now.day % 10)), height=5),
                             ]
                         )
                     ]
