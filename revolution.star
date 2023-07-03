@@ -19,8 +19,8 @@ def main(config):
                 render.Padding(
                     pad=(0, 0, 4, 0),
                     child=render.Box(
-                        width=const.WIDTH,
-                        height=const.WIDTH,
+                        width=const.HEIGHT,
+                        height=const.HEIGHT,
                         child=render.Column(
                             expanded=True,
                             main_align="space_between",
