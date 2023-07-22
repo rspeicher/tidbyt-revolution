@@ -29,6 +29,7 @@ jobs:
         run: meltano install
       - name: Render app to image
         env:
+          TZ: America/Mexico_City
           TAP_PIXLET_MAGNIFICATION: "8"
         run: |
           meltano run webp
