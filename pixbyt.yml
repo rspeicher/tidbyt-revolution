@@ -1,0 +1,14 @@
+jobs:
+- name: revolution
+  tasks:
+  - tap-pixlet--revolution target-tidbyt
+- name: revolution--webp
+  tasks:
+  - tap-pixlet--revolution target-webp
+
+plugins:
+  extractors:
+  - name: tap-pixlet--revolution
+    inherit_from: tap-pixlet
+    config:
+      path: apps/revolution
