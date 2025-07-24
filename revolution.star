@@ -50,7 +50,7 @@ def image(name):
     return base64.decode(IMAGES[name])
 
 def main(config):
-    TZ = config.get("$tz") or "America/Mexico_City"
+    TZ = config.get("timezone") or "America/Mexico_City"
 
     now = time.now().in_location(TZ)
 
